@@ -21,3 +21,6 @@ yarn build
 ```
 yarn test
 ```
+
+## CI/CD
+
