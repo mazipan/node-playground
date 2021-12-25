@@ -29,3 +29,5 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           working-directory: ./
+          alias-domains: | #Optional
+            pr-{{PR_NUMBER}}-razzle-playground.vercel.app/
