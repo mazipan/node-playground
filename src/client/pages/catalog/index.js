@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+
 import useCatalog from '../../fetcher/useCatalog';
+import { updateCart } from './logic';
 
 import './styles.css';
 
@@ -15,34 +17,11 @@ const Catalog = () => {
   const { data } = useCatalog()
 
   const handleChangeinput = (e, product) => {
-    const val =  e.target.value;
+    const val = e.target.value;
 
-    const existingProducts = cart.products;
-    const withoutCurrentProduct = existingProducts.filter(p => p.sku !== product.sku);
-    const findProduct = existingProducts.find(p => p.sku === product.sku);
+    const newCart = updateCart({ cart, qty: val, product });
 
-    if (findProduct) {
-      const tempCart = {
-        total: cart.total + product.price,
-        promos: [],
-        products: withoutCurrentProduct.concat({
-          ...product,
-          qty: val
-        })
-      }
-      setCart(tempCart);
-    } else {
-      const tempCart = {
-        total: product.price,
-        totalProduct: 1,
-        promos: [],
-        products: existingProducts.concat({
-          ...product,
-          qty: val
-        })
-      }
-      setCart(tempCart);
-    }
+    setCart(newCart);
   }
 
   return (
