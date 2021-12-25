@@ -24,6 +24,9 @@ jobs:
       - name: Perform testing
         run: yarn test
 
+      - name: Perform build source
+        run: yarn build
+
       - name: Deploy to production
         uses: amondnet/vercel-action@v20
         with:
