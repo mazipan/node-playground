@@ -19,7 +19,7 @@ jobs:
         run: yarn install
 
       - name: Perform testing
-        run: yarn test
+        run: yarn test --coverage
 
       - name: Perform build source
         run: yarn build
