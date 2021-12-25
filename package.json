@@ -6,7 +6,7 @@
     "start": "razzle start",
     "dev": "razzle start",
     "build": "razzle build --noninteractive",
-    "test": "razzle test --env=jsdom",
+    "test": "razzle test --env=jsdom --coverage",
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
@@ -25,5 +25,8 @@
     "razzle-dev-utils": "^4.2.8",
     "webpack": "^4.44.1",
     "webpack-dev-server": "^3.11.2"
+  },
+  "resolutions": {
+    "postcss": "8.2.4"
   }
 }
