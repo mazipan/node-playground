@@ -65,7 +65,7 @@
   overflow: hidden;
   white-space: pre-wrap;
   line-height: 1.5;
-  margin-bottom: 0.5rem;
+  margin: 0;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -87,6 +87,10 @@
 
 .Catalog-form-qty > input {
   width: 50px;
+}
+
+.Catalog-product-promo{
+  color: orange;
 }
 
 .Catalog-summary {

@@ -24,8 +24,9 @@ export const catalogData = [{
   stock: 2
 }];
 
-export const promotionRules = [{
+export const activePromo = [{
   name: 'Each sale of a MacBook Pro comes with a free Raspberry Pi B',
+  label: 'Free Raspbery Pi B',
   sku: '43N23P',
   minQty: 1,
   promo: {
@@ -36,6 +37,7 @@ export const promotionRules = [{
   },
 }, {
   name: 'Buy 3 Google Homes for the price of 2',
+  label: 'Buy 3 for price of 2',
   sku: '120P90',
   minQty: 3,
   promo: {
@@ -46,6 +48,7 @@ export const promotionRules = [{
   }
 }, {
   name: 'Buying more than 3 Alexa Speakers will have a 10% discount on all Alexa speakers',
+  label: 'Buy 3, discount 10%',
   sku: 'A304SD',
   minQty: 3,
   promo: {
@@ -56,3 +59,13 @@ export const promotionRules = [{
     sku: 'A304SD',
   }
 }];
+
+export const catalogWithPromo = catalogData.map(product => {
+  const foundPromo = activePromo.find(promo => promo.sku === product.sku);
+  const havePromotion = Boolean(foundPromo)
+  return {
+    ...product,
+    havePromotion: havePromotion,
+    promo: havePromotion ? foundPromo : null,
+  }
+})

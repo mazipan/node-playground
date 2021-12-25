@@ -47,6 +47,9 @@ const Catalog = () => {
                     handleChangeinput(e, product)
                   }} />
                 </div>
+                {product.havePromotion && (
+                  <small className="Catalog-product-promo">{product.promo.label}</small>
+                )}
               </div>
             </div>
           ))}
