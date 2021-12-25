@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  razzle:
+    build:
+      dockerfile: ./Dockerfile.prod
+      context: ./
+    ports:
+      - 3000:3000
+      - 3001:3001
+    restart: always
+    command: yarn start:prod
+    environment:
+      NODE_ENV: production
+

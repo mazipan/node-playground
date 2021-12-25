@@ -1,0 +1,6 @@
+FROM node:alpine
+WORKDIR /code/
+
+COPY ./package.json ./vercel.json ./yarn.lock ./src ./public /code/
+RUN yarn
+
