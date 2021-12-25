@@ -1,6 +1,10 @@
 {
   "name": "node-playground",
   "version": 2,
+  "public": true,
+  "github": {
+    "enabled": false
+  },
   "builds": [
     {
       "src": "build/public/**",

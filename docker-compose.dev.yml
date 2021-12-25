@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  razzle:
+    build:
+      dockerfile: ./Dockerfile.dev
+      context: ./
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - ./:/code/
+    restart: always
+    command: yarn start
+    environment:
+      NODE_ENV: development
+
