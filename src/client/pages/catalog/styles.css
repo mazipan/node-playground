@@ -96,4 +96,31 @@
   box-sizing: border-box;
   box-shadow: 0px 1px 6px rgb(49 53 59 / 12%);
   border-radius: 10px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.Catalog-summary > section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Catalog-summary > button {
+  display: flex;
+  justify-content: center;
+  border-radius: .5em;
+  padding: 10px;
+  font-size: 1rem;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: 2px solid #4CAF50;
+}
+
+.Catalog-summary > button:hover {
+  background-color: white;
+  color: #4CAF50;
 }

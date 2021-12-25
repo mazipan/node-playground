@@ -53,14 +53,14 @@ const Catalog = () => {
         </div>
         <div className="Catalog-summary">
           <b>Ringkasan Belanja</b>
-          <div>
+          <section>
             <span>Total product</span>
-            <span>{cart.totalProduct}</span>
-          </div>
-          <div>
+            <b>{cart.totalProduct}</b>
+          </section>
+          <section>
             <span>Total</span>
-            <span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.total)}</span>
-          </div>
+            <b>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.total)}</b>
+          </section>
           <button>Beli sekarang</button>
         </div>
       </div>
