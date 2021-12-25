@@ -8,6 +8,7 @@ import './styles.css';
 const initialCart = {
   total: 0,
   totalProduct: 0,
+  totalAfterPromo: 0,
   promos: [],
   products: []
 };
@@ -55,16 +56,29 @@ const Catalog = () => {
           ))}
         </div>
         <div className="Catalog-summary">
-          <b>Ringkasan Belanja</b>
+          <b>Summary</b>
+          {cart.products && cart.products.map(product => (
+            <section key={product.sku}>
+              <small>{product.name}</small>
+              <small>{product.qty}</small>
+            </section>
+          ))}
+          {cart.products.length > 0 && (
+            <div className='separator'/>
+          )}
           <section>
-            <span>Total product</span>
-            <b>{cart.totalProduct}</b>
+            <small>Total Shop</small>
+            <small>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.total)}</small>
+          </section>
+          <section className='promo'>
+            <small>Promo</small>
+            <small>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.total - cart.totalAfterPromo)}</small>
           </section>
           <section>
             <span>Total</span>
-            <b>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.total)}</b>
+            <b>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(cart.totalAfterPromo)}</b>
           </section>
-          <button>Beli sekarang</button>
+          <button>Buy Now</button>
         </div>
       </div>
     </div>

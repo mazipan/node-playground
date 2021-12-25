@@ -1,10 +1,27 @@
-export const sumCartPriceAndQty = (cartProducts) => {
-  return cartProducts.reduce(function (previousValue, currentValue) {
-    return {
-      price: previousValue.price + (currentValue.price * currentValue.qty),
-      qty: previousValue.qty + currentValue.qty
+export const calculatePriceWithPromo = (product) => {
+  if (product.havePromotion) {
+    // Eligible for promo when meet w "promo.minQty"
+    // Attribute "qty" is ONLY exist from Cart object
+    if (product.qty >= product.promo.minQty) {
+      if (product.promo.rule.type === 'free' && product.promo.rule.product === 'existing') {
+        return (product.price * product.qty) - (product.price * product.promo.rule.qty);
+      } else if (product.promo.rule.type === 'discount' && product.promo.rule.product === 'existing') {
+        return (product.price * product.qty) - ((product.price * product.qty) * product.promo.rule.percent / 100);
+      }
     }
-  }, { price: 0, qty: 0 })
+  }
+
+  return (product.price * product.qty);
+}
+
+export const sumCartPriceAndQty = (cartProducts) => {
+  return cartProducts.reduce(function (previousValue, product) {
+    return {
+      price: previousValue.price + (product.price * product.qty),
+      afterPromo: previousValue.afterPromo + calculatePriceWithPromo(product),
+      qty: previousValue.qty + product.qty
+    }
+  }, { price: 0, afterPromo: 0, qty: 0 })
 }
 
 export const updateCart = ({ product, qty, cart }) => {
@@ -21,10 +38,11 @@ export const updateCart = ({ product, qty, cart }) => {
         qty: intQty
       });
 
-      const { price: totalPrice, qty: totalQty } = sumCartPriceAndQty(newProducts);
+      const { price: totalPrice, qty: totalQty, afterPromo } = sumCartPriceAndQty(newProducts);
 
       const result = {
         total: totalPrice,
+        totalAfterPromo: afterPromo,
         totalProduct: totalQty,
         promos: [],
         products: newProducts
@@ -37,10 +55,11 @@ export const updateCart = ({ product, qty, cart }) => {
         qty: intQty
       });
 
-      const { price: totalPrice, qty: totalQty } = sumCartPriceAndQty(newProducts);
+      const { price: totalPrice, qty: totalQty, afterPromo } = sumCartPriceAndQty(newProducts);
 
       const result = {
         total: totalPrice,
+        totalAfterPromo: afterPromo,
         totalProduct: totalQty,
         promos: [],
         products: newProducts
@@ -50,10 +69,11 @@ export const updateCart = ({ product, qty, cart }) => {
     }
   }
 
-  const { price: totalPrice, qty: totalQty } = sumCartPriceAndQty(withoutCurrentProduct);
+  const { price: totalPrice, qty: totalQty, afterPromo } = sumCartPriceAndQty(withoutCurrentProduct);
 
   return {
     total: totalPrice,
+    totalAfterPromo: afterPromo,
     totalProduct: totalQty,
     promos: [],
     products: withoutCurrentProduct

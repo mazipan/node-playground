@@ -29,9 +29,9 @@ export const activePromo = [{
   label: 'Free Raspbery Pi B',
   sku: '43N23P',
   minQty: 1,
-  promo: {
-    name: 'free',
-    rule: 'additional',
+  rule: {
+    type: 'free',
+    product: 'additional',
     qty: 1,
     sku: '234234',
   },
@@ -40,9 +40,9 @@ export const activePromo = [{
   label: 'Buy 3 for price of 2',
   sku: '120P90',
   minQty: 3,
-  promo: {
-    name: 'free',
-    rule: 'existing',
+  rule: {
+    type: 'free',
+    product: 'existing',
     qty: 1,
     sku: '120P90',
   }
@@ -51,9 +51,9 @@ export const activePromo = [{
   label: 'Buy 3, discount 10%',
   sku: 'A304SD',
   minQty: 3,
-  promo: {
-    name: 'discount',
-    rule: 'existing',
+  rule: {
+    type: 'discount',
+    product: 'existing',
     percent: 10,
     qty: 0,
     sku: 'A304SD',

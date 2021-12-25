@@ -1,12 +1,71 @@
-import { sumCartPriceAndQty, updateCart } from '../logic';
+import { sumCartPriceAndQty, updateCart, calculatePriceWithPromo } from '../logic';
 
 describe('sumCartPriceAndQty', () => {
   test.each([
-    ['price 100, qty 1', [{ price: 100, qty: 1 }], { "price": 100, "qty": 1 }],
-    ['price 100, qty 2', [{ price: 100, qty: 2 }], { "price": 200, "qty": 2 }],
-    ['price 100, qty 2 + price 200, qty 3', [{ price: 100, qty: 2 }, { price: 200, qty: 3 }], { "price": 800, "qty": 5 }],
+    ['price 100, qty 1', [{ price: 100, qty: 1 }], { "price": 100, "afterPromo": 100, "qty": 1 }],
+    ['price 100, qty 2', [{ price: 100, qty: 2 }], { "price": 200, "afterPromo": 200, "qty": 2 }],
+    ['price 100, qty 2 + price 200, qty 3', [{ price: 100, qty: 2 }, { price: 200, qty: 3 }], { "price": 800, "afterPromo": 800, "qty": 5 }],
   ])('%s', (_, input, expected) => {
     expect(sumCartPriceAndQty(input)).toStrictEqual(expected);
+  });
+});
+
+describe('calculatePriceWithPromo -> free 1 product', () => {
+  test.each([
+    [1, 50],
+    [2, 100],
+    [3, 100],
+    [4, 150],
+    [5, 200],
+  ])('Given %i qty should return %i', (input, expected) => {
+    const dummyProduct = {
+      sku: '123',
+      price: 50,
+      qty: input,
+      havePromotion: true,
+      promo: {
+        minQty: 3,
+        rule: {
+          type: 'free',
+          product: 'existing',
+          qty: 1,
+          sku: '123',
+        }
+      }
+    };
+
+    const res = calculatePriceWithPromo(dummyProduct);
+    expect(res).toBe(expected);
+  });
+});
+
+describe('calculatePriceWithPromo -> get discount', () => {
+  test.each([
+    [1, 50],
+    [2, 100],
+    [3, 135],
+    [4, 180],
+    [5, 225],
+  ])('Given %i qty should return %i', (input, expected) => {
+    const dummyProduct = {
+      sku: '123',
+      price: 50,
+      qty: input,
+      havePromotion: true,
+      promo: {
+        minQty: 3,
+        rule: {
+          type: 'discount',
+          product: 'existing',
+          percent: 10,
+          qty: 0,
+          sku: '123',
+        }
+      }
+    };
+
+    const res = calculatePriceWithPromo(dummyProduct);
+    expect(res).toBe(expected);
   });
 });
 
