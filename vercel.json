@@ -29,6 +29,10 @@
       "dest": "build/public/static/$1"
     },
     {
+      "src": "/images/(.*)",
+      "dest": "build/public/images/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "build/server.js"
     }
